@@ -30,8 +30,6 @@ export default {
       name: 'price',
       title: 'Price',
       type: 'number',
-      description: 'Price in cents',
-      validation: Rule => Rule.min(1000).max(500000),
     },
     {
       name: 'details',
