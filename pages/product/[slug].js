@@ -1,27 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar  } from "react-icons/ai";
+import { Product } from "../../components";
 import { client, urlFor } from "../../lib/client";
 
 
 const ProductDetails = ({ product, products }) => {
   const { image, name, price, details } = product;
+  const [index, setIndex] = useState(0);
 
   return (
     <div>
       <div className="product-detail-container">
         <div>
           <div className="image-container">
-            <img src={urlFor(image && image[0])} alt="" />
+            <img src={urlFor(image && image[index])} className="product-detail-image" />
           </div>
-          {/* <div className="small-images-container">
-            {image?.map((img, index) => (
+          <div className="small-images-container">
+            {image?.map((img, i) => (
               <img 
-                key={index} 
-                src={urlFor(img)
-              } alt="" 
+                key={i}
+                src={urlFor(img)}
+                className={i === index ? "small-image selected-image" : "small-image"}
+                onMouseEnter={() => setIndex(i)}
               />
             ))}
-          </div> */}
+          </div>
         </div>
 
         <div className="product-detail-desc">
@@ -63,6 +66,17 @@ const ProductDetails = ({ product, products }) => {
             <button type="button" className="buy-now" onClick="">
               Buy Now
             </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="maylike-products-wrapper">
+        <h2>You may also like</h2>
+        <div className="marquee">
+          <div className="maylike-products-container track">
+            {products?.map((product) => (
+              <Product key={product._id} product={product} />
+            ))}
           </div>
         </div>
       </div>
