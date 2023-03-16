@@ -2,6 +2,7 @@ import Stripe from "stripe";
 
 const stripe = new Stripe(`${process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY}`);
 
+// Create a Checkout Session with the selected items from the cart
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {

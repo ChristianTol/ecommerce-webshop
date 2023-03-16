@@ -101,6 +101,7 @@ const ProductDetails = ({ product, products }) => {
   );
 };
 
+// Fetching data from Sanity CMS for all products for the "You may also like" section at the bottom of the page.
 export const getStaticPaths = async () => {
   const query = `*[_type == "product"] {
     slug {
@@ -123,6 +124,7 @@ export const getStaticPaths = async () => {
   };
 };
 
+// Fetching data from Sanity CMS for a single product based on the slug in the URL path.
 export const getStaticProps = async ({ params: { slug } }) => {
   const query = `*[_type == "product" && slug.current == '${slug}'][0]`;
   const productsQuery = '*[_type == "product"]';

@@ -13,16 +13,19 @@ export const StateContext = ({ children }) => {
   let foundProduct;
   let index;
 
+  // Add to cart function and toast notification for success
   const onAdd = (product, quantity) => {
     const checkProductInCart = cartItems.find(
       (item) => item._id === product._id
     );
 
+    // Update total price and quantity
     setTotalPrice(
       (prevTotalPrice) => prevTotalPrice + product.price * quantity
     );
     setTotalQuantity((prevTotalQuantity) => prevTotalQuantity + quantity);
 
+    // Check if product is already in cart
     if (checkProductInCart) {
       const updatedCartItems = cartItems.map((cartProduct) => {
         if (cartProduct._id === product._id) {
@@ -33,19 +36,23 @@ export const StateContext = ({ children }) => {
         }
       });
 
+      // Update cart items
       setCartItems(updatedCartItems);
     } else {
       product.quantity = quantity;
       setCartItems([...cartItems, { ...product }]);
     }
 
+    // Show toast notification
     toast.success(`${qty} ${product.name} added to cart`);
   };
 
+  // Remove from cart function
   const onRemove = (product) => {
     foundProduct = cartItems.find((item) => item._id === product._id);
     const newCartItems = cartItems.filter((item) => item._id !== product._id);
 
+    // Update total price and quantity
     setTotalPrice(
       (prevTotalPrice) =>
         prevTotalPrice - foundProduct.price * foundProduct.quantity
@@ -56,10 +63,12 @@ export const StateContext = ({ children }) => {
     setCartItems(newCartItems);
   };
 
+  // Toggle cart item quantity function
   const toggleCartItemQuantity = (id, value) => {
     foundProduct = cartItems.find((item) => item._id === id);
     index = cartItems.findIndex((product) => product._id === id);
 
+    // Check if value is inc or dec and update cart items and total price and quantity accordingly
     if (value === "inc") {
       setCartItems((prevCartItems) =>
         prevCartItems.map((item) => {
@@ -87,6 +96,7 @@ export const StateContext = ({ children }) => {
     }
   };
 
+  // Increment and decrement quantity functions
   const incQty = () => {
     setQty((prevQty) => prevQty + 1);
   };
